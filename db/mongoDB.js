@@ -16,7 +16,7 @@ export async function connect() {
     try {
         if (!db) {
             await client.connect();
-            db = client.db("Messages_Collection");
+            db = client.db("Users_mongo");
             console.log("Connected to MongoDB");
         }
         return db;
