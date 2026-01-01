@@ -30,3 +30,6 @@ export const decryptMessage = async (id) => {
     }
 }
 
+export const MyProfile = async (username) => {
+    
+}
