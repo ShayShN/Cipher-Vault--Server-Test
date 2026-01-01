@@ -1,13 +1,12 @@
-import { ObjectId } from "mongodb";
-import { registerUser, findUsername } from "../DAL/usersDal.js";
+import { registerUser, findUsername, MyProfile } from "../DAL/usersDal.js";
 
 
 
 export async function createUser(req, res) {
     try {
-        const existsUsername = await findUsername(req.username)
+        const existsUsername = await findUsername(req.body.username)
         console.log("hhh", existsUsername);
-        
+
         if (existsUsername.username !== req.body.username) {
             const data = {
                 username: req.body.username,
@@ -24,9 +23,22 @@ export async function createUser(req, res) {
                 username: req.body.username
             })
         }
-        else{return res.status(401).json("alrady exists")}
+        else { return res.status(401).json("alrady exists") }
 
     } catch (err) {
         console.error(err);
     }
+}
+
+export async function finddMessagCount(req, res) {
+   try {
+     const found = await MyProfile(req.headers.username)
+     return res.status(200).json({
+         "username": req.headers.username,
+         "encryptedMessagesCount": found.encryptedMessagesCount
+     })
+   } catch (err) {
+        console.error(err);
+        
+   }
 }
